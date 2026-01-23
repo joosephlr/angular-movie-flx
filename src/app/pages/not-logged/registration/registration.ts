@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { SignUp } from "../../../components/not-logged/sign-up/sign-up";
 import { Header } from "../../../components/not-logged/header/header";
+import { SignIn } from "../../../components/not-logged/sign-in/sign-in";
+import { SignUp } from "../../../components/not-logged/sign-up/sign-up";
 
 @Component({
   selector: 'app-registration',
-  imports: [SignUp, Header],
+  imports: [Header, SignIn, SignUp],
   templateUrl: './registration.html',
   styleUrl: './registration.css',
 })

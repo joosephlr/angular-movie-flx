@@ -1,1 +1,38 @@
-<p>sign-in login!</p>
+<div id="sign-in-container" class="d-flex justify-content-center align-items-center">
+    <div class="sign-in-card">
+        <h1 class="sign-in-title">Entre na sua conta</h1>
+        
+        <form class="sign-in-form">
+            <div class="mb-3">
+                <input 
+                    type="text" 
+                    class="form-control sign-in-input" 
+                    placeholder="E-mail ou número de telefone"
+                    id="email"
+                >
+            </div>
+            
+            <div class="mb-3">
+                <input 
+                    type="password" 
+                    class="form-control sign-in-input" 
+                    placeholder="Sua senha"
+                    id="password"
+                >
+            </div>
+            
+            <button type="submit" class="btn sign-in-button w-100 mb-3">
+                Entrar na conta
+            </button>
+            
+            <div class="text-center mb-4">
+                <a href="/cadastre-se" class="forgot-password-link">Esqueci minha senha</a>
+            </div>
+        </form>
+        
+        <div class="text-center sign-up-prompt">
+            <span>Novo por aqui? </span>
+            <a href="/cadastre-se" class="sign-up-link">Assine agora</a>
+        </div>
+    </div>
+</div>

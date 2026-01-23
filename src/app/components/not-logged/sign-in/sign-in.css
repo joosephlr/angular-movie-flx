@@ -1,0 +1,103 @@
+#sign-in-container {
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    margin-top: -250px;
+}
+
+.sign-in-card {
+    background-color: rgba(0, 0, 0, 0.75);
+    border-radius: 8px;
+    padding: 48px 68px 40px;
+    width: 500px;
+    max-width: 700px;
+    color: white;
+    margin: auto;
+}
+
+.sign-in-title {
+    font-size: 32px;
+    font-weight: 500;
+    margin-bottom: 28px;
+    color: white;
+    text-align: left;
+}
+
+.sign-in-form {
+    margin-bottom: 16px;
+}
+
+.sign-in-input {
+    background-color: #333;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    font-size: 16px;
+    height: 50px;
+    padding: 16px 20px;
+    margin-bottom: 16px;
+}
+
+.sign-in-input::placeholder {
+    color: #8c8c8c;
+}
+
+.sign-in-input:focus {
+    background-color: #454545;
+    border: none;
+    box-shadow: none;
+    color: white;
+    outline: none;
+}
+
+.sign-in-button {
+    background-color: #E50914;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+    height: 50px;
+    margin-top: 24px;
+    transition: background-color 0.2s;
+}
+
+.sign-in-button:hover {
+    background-color: #f40612;
+    color: white;
+}
+
+.sign-in-button:focus {
+    background-color: #E50914;
+    color: white;
+    box-shadow: none;
+}
+
+.forgot-password-link {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.forgot-password-link:hover {
+    text-decoration: underline;
+    color: white;
+}
+
+.sign-up-prompt {
+    color: #737373;
+    font-size: 16px;
+}
+
+.sign-up-link {
+    color: white;
+    text-decoration: none;
+}
+
+.sign-up-link:hover {
+    text-decoration: underline;
+    color: white;
+}

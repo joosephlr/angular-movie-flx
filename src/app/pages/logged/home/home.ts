@@ -9,5 +9,4 @@ import { Card } from "../../../components/logged/card/card";
   styleUrl: './home.css',
 })
 export class Home {
-
 }

@@ -1,1 +1,33 @@
-<p>card works!</p>
+<div class="movie-card">
+  @if (isTop10) {
+    <div class="movie-card__badge">
+      {{ topLabel }}
+    </div>
+  }
+
+  <div class="movie-card__content">
+    <h3 class="movie-card__title">{{ title }}</h3>
+    <p class="movie-card__description">
+      {{ description }}
+    </p>
+  </div>
+
+  <div class="movie-card__footer">
+    <div class="movie-card__meta">
+      <span class="movie-card__meta-item">
+        <span class="movie-card__icon">🕒</span>
+        {{ duration }}
+      </span>
+      <span class="movie-card__meta-item">
+        <span class="movie-card__icon">🔞</span>
+        {{ ageRating }}
+      </span>
+      <span class="movie-card__meta-item">
+        <span class="movie-card__icon">🔥</span>
+        {{ approval }}% Aprovação
+      </span>
+    </div>
+
+    <div class="movie-card__provider">{{ provider }}</div>
+  </div>
+</div>

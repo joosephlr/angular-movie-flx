@@ -74,6 +74,14 @@ body {
     font-size: 12px;
 }
 
+.movie-card__meta-item.approval-high {
+    color: #4caf50;
+}
+
+.movie-card__meta-item.approval-low {
+    color: #f44336;
+}
+
 .movie-card__provider {
     background-color: #e50914;
     color: #fff;

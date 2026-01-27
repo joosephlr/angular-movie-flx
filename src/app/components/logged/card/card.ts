@@ -1,8 +1,9 @@
 import { Component, Input } from '@angular/core';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-card',
-  imports: [],
+  imports: [NgClass],
   templateUrl: './card.html',
   styleUrl: './card.css',
 })
@@ -16,4 +17,14 @@ export class Card {
 
   @Input() isTop10: boolean = false;
   @Input() topLabel: string = 'TOP 10';
+
+  getApprovalClasses(): { [key: string]: boolean } {
+    if (this.approval == null) {
+      return {};
+    }
+    return {
+      'approval-high': this.approval >= 50,
+      'approval-low': this.approval < 50
+    };
+  }
 }

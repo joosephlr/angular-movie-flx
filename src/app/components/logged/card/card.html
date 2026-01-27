@@ -22,7 +22,7 @@
         <span class="movie-card__icon">🔞</span>
         {{ ageRating }}
       </span>
-      <span class="movie-card__meta-item">
+      <span class="movie-card__meta-item" [ngClass]="getApprovalClasses()">
         <span class="movie-card__icon">🔥</span>
         {{ approval }}% Aprovação
       </span>

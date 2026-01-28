@@ -7,6 +7,9 @@ body {
 .home-container {
     padding: 120px 5% 40px;
     box-sizing: border-box;
+    height: 100vh;
+    overflow-y: auto;
+    min-height: 100vh;
 }
 
 .cards-grid {
@@ -14,6 +17,7 @@ body {
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 24px;
     justify-items: center;
+    margin-bottom: 80px;
 }
 
 @media (max-width: 480px) {

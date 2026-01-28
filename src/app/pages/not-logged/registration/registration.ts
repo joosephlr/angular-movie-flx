@@ -5,7 +5,7 @@ import { SignUp } from "../../../components/not-logged/sign-up/sign-up";
 
 @Component({
   selector: 'app-registration',
-  imports: [Header, SignIn, SignUp],
+  imports: [Header, SignUp],
   templateUrl: './registration.html',
   styleUrl: './registration.css',
 })

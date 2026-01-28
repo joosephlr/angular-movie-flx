@@ -8,5 +8,6 @@ import { Card } from "../../../components/logged/card/card";
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
+
 export class Home {
 }

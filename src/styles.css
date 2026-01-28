@@ -9,3 +9,7 @@ html, body {
 body {
     color: white;
 }
+
+.active {
+    color: red;
+}

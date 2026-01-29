@@ -64,15 +64,5 @@ export class Home {
       provider: 'CLARO TV',
       isTop10: true,
     },
-    {
-      id: 6,
-      title: 'Oppenheimer',
-      description: 'A história real do cientista que liderou a criação da bomba atômica, mudando o curso da humanidade para sempre.',
-      duration: '3:00h',
-      ageRating: 'Somente +18',
-      approval: 93,
-      provider: 'APPLE TV+',
-      isTop10: false,
-    }
   ];
 }

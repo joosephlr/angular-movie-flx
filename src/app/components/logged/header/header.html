@@ -1,27 +1,94 @@
-<div id="header"> 
-    <div class="logo">
-        <img src="/images/movieflx-image.png" alt="logo">
-    </div>
-    
-    <nav class="nav-links">
-        <a href="#" class="nav-link">Início</a>
-        <a href="#" class="nav-link">Séries</a>
-        <a href="#" class="nav-link">Filmes</a>
-        <a href="#" class="nav-link">Originais</a>
-        <a href="#" class="nav-link">Novidades</a>
-        <a [routerLink]="['/novo-filme']" routerLinkActive="active" class="nav-link">Cadastrar novo filme</a>
-    </nav>
-    
-    <div class="right-section">
-        <div class="search-container">
-            <input type="text" class="search-input" placeholder="Search">
-            <svg class="search-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M11.7422 10.3439C12.5329 9.2673 13 8.01432 13 6.5C13 2.91015 10.0899 0 6.5 0C2.91015 0 0 2.91015 0 6.5C0 10.0899 2.91015 13 6.5 13C8.01432 13 9.2673 12.5329 10.3439 11.7422L14.2929 15.6914C14.6834 16.0819 15.3166 16.0819 15.7071 15.6914C16.0976 15.3009 16.0976 14.6677 15.7071 14.2772L11.7422 10.3439ZM12 6.5C12 9.53757 9.53757 12 6.5 12C3.46243 12 1 9.53757 1 6.5C1 3.46243 3.46243 1 6.5 1C9.53757 1 12 3.46243 12 6.5Z" fill="#8c8c8c"/>
-            </svg>
+<nav id="header" class="navbar navbar-expand-lg navbar-dark px-1" style="background: #000 !important; z-index: 2; position: relative; padding-top: 8px; padding-bottom: 0;">
+    <div class="container-fluid px-0" style="padding-top: 0 !important; padding-bottom: 0 !important;">
+        <div class="w-100 d-flex align-items-center flex-wrap flex-lg-nowrap" style="position:relative;">
+            <!-- Logo -->
+            <a class="navbar-brand d-flex align-items-center me-3" [routerLink]="['']" style="padding-top: 0; padding-bottom: 0;">
+                <img src="/images/movieflx-image.png" alt="logo" style="max-height:130px;">
+            </a>
+            <!-- Toggler button for mobile (visível apenas em telas menores) -->
+            <button 
+                class="navbar-toggler d-lg-none ms-auto" 
+                type="button"
+                style="margin-top: 0; margin-bottom: 0;"
+                [attr.aria-expanded]="isNavbarCollapsed ? 'true' : 'false'"
+                aria-label="Toggle navigation"
+                (click)="isNavbarCollapsed = !isNavbarCollapsed">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <!-- Fundo preto agora cobre apenas o menu dropdown, sem cobrir o logo e toggler -->
+            <div 
+                *ngIf="isNavbarCollapsed" 
+                class="navbar-backdrop"
+                style="
+                    position: absolute;
+                    top: 100%; 
+                    left: 0; 
+                    right: 0; 
+                    height: 300px; /* Ajuste a altura conforme as opções visíveis */
+                    background: rgba(0,0,0,0.98); 
+                    z-index: 1000;
+                    transition: background 0.3s;
+                ">
+            </div>
+
+            <div class="navbar-collapse d-lg-flex align-items-center"
+                [class.collapse]="!isNavbarCollapsed"
+                [class.show]="isNavbarCollapsed"
+                id="navbarMovieflx"
+                style="z-index: 2000; position: static; width: auto; background: transparent;">
+                <!-- Left: Nav Links -->
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 nav-links"
+                    [ngClass]="{
+                        'd-flex align-items-center flex-row': !isNavbarCollapsed,
+                        'd-flex flex-column w-100 text-center mt-3': isNavbarCollapsed
+                    }"
+                >
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Início</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Séries</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Filmes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Originais</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Novidades</a>
+                    </li>
+                    <li class="nav-item">
+                        <a [routerLink]="['/novo-filme']" routerLinkActive="active" class="nav-link">Cadastrar novo filme</a>
+                    </li>
+                </ul>
+                <!-- Right: Search and Avatar -->
+                <div 
+                    class="right-section d-flex align-items-center gap-3 mt-2 mt-lg-0"
+                    [ngClass]="{
+                        'ms-auto': !isNavbarCollapsed,
+                        'justify-content-center w-100': isNavbarCollapsed
+                    }"
+                    [ngStyle]="isNavbarCollapsed ? {
+                        'background': 'rgba(0,0,0,0.98)',
+                        'position': 'relative',
+                        'z-index': 1500,
+                        'padding': '18px 0',
+                        'width': '100%'
+                    } : {}"
+                >
+                    <div class="search-container position-relative">
+                        <input type="text" class="search-input form-control" placeholder="Pesquise aqui" style="min-width:180px;">
+                        <svg class="search-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M11.7422 10.3439C12.5329 9.2673 13 8.01432 13 6.5C13 2.91015 10.0899 0 6.5 0C2.91015 0 0 2.91015 0 6.5C0 10.0899 2.91015 13 6.5 13C8.01432 13 9.2673 12.5329 10.3439 11.7422L14.2929 15.6914C14.6834 16.0819 15.3166 16.0819 15.7071 15.6914C16.0976 15.3009 16.0976 14.6677 15.7071 14.2772L11.7422 10.3439ZM12 6.5C12 9.53757 9.53757 12 6.5 12C3.46243 12 1 9.53757 1 6.5C1 3.46243 3.46243 1 6.5 1C9.53757 1 12 3.46243 12 6.5Z" fill="#8c8c8c"/>
+                        </svg>
+                    </div>
+                    <div class="avatar-container ms-2">
+                        <img src="/images/avatar.jpg" alt="Avatar" class="avatar" style="width:42px; height:42px;">
+                    </div>
+                </div>
+            </div>
         </div>
-        
-        <div class="avatar-container">
-            <img src="/images/avatar.jpg" alt="Avatar" class="avatar">
-        </div>
     </div>
-</div>
+</nav>

@@ -2,26 +2,43 @@
     <div class="sign-in-card">
         <h1 class="sign-in-title">Entre na sua conta</h1>
         
-        <form class="sign-in-form">
+        <form class="sign-in-form" (ngSubmit)="onSubmit()" #signInForm="ngForm">
             <div class="mb-3">
                 <input 
-                    type="text" 
-                    class="form-control sign-in-input" 
+                    type="text"
+                    name="email"
+                    class="form-control sign-in-input"
                     placeholder="E-mail ou número de telefone"
                     id="email"
+                    [(ngModel)]="user.email"
+                    required
+                    email
                 >
+                <div *ngIf="signInForm.controls['email'].errors?.['required']" class="invalid-feedback">
+                    E-mail é obrigatório
+                </div>
+                <div *ngIf="signInForm.controls['email'].errors?.['email']" class="invalid-feedback">
+                    E-mail inválido
+                </div>
             </div>
             
             <div class="mb-3">
                 <input 
-                    type="password" 
-                    class="form-control sign-in-input" 
+                    type="password"
+                    name="password"
+                    class="form-control sign-in-input"
                     placeholder="Sua senha"
                     id="password"
+                    [(ngModel)]="user.password"
+                    required
                 >
             </div>
             
-            <button type="submit" class="btn sign-in-button w-100 mb-3">
+            <div class="alert alert-danger" role="alert" *ngIf="errorMessage">
+                {{ errorMessage }}
+            </div>
+            
+            <button type="submit" class="btn sign-in-button w-100 mb-3" [disabled]="signInForm.invalid">
                 Entrar na conta
             </button>
             

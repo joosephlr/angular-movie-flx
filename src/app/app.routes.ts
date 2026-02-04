@@ -3,15 +3,18 @@ import { Login } from './pages/not-logged/home/login';
 import { Home } from './pages/logged/home/home';
 import { Registration } from './pages/not-logged/registration/registration';
 import { CreatedMovie } from './pages/logged/created-movie/created-movie';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   {
     path: '',
-    component: Home
+    component: Home,
+    canActivate: [authGuard]
   },
   {
     path: 'novo-filme',
-    component: CreatedMovie
+    component: CreatedMovie,
+    canActivate: [authGuard]
   },
   {
     path: 'login',

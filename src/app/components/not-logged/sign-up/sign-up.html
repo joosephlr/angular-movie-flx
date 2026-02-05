@@ -2,36 +2,66 @@
     <div class="sign-up-card">
         <h1 class="sign-up-title">Cadastre-se</h1>
         
-        <form class="sign-up-form">
+        <form #registerForm="ngForm" class="sign-up-form" (ngSubmit)="onSubmit()">
             <div class="mb-3">
                 <input 
                     type="text" 
                     class="form-control sign-up-input" 
                     placeholder="Seu nome completo"
                     id="nomeCompleto"
+                    name="name"
+                    [(ngModel)]="user.name"
+                    required
                 >
+
+                <div *ngIf="registerForm.submitted && !user.name" class="text-danger small mt-1">
+                    O nome é obrigatório.
+                </div>
+
             </div>
+
             <div class="mb-3">
                 <input 
                     type="text" 
                     class="form-control sign-up-input" 
                     placeholder="Seu melhor e-mail"
                     id="email"
+                    name="email"
+                    [(ngModel)]="user.email"
+                    required
                 >
+
+                <div *ngIf="registerForm.submitted && !user.email" class="text-danger small mt-1">
+                    O e-mail é obrigatório.
+                </div>
             </div>
             <div class="mb-3">
                 <input 
-                    type="password" 
-                    class="form-control sign-up-input" 
+                    type="password"
+                    class="form-control sign-up-input"
                     placeholder="Sua senha"
                     id="password"
+                    name="password"
+                    [(ngModel)]="user.password"
+                    required
                 >
+
+                <div *ngIf="registerForm.submitted && !user.password" class="text-danger small mt-1">
+                    A senha é obrigatória.
+                </div>
             </div>
             
-            <button type="submit" class="btn sign-up-button w-100 mb-3">
-                Entrar na conta
-            </button>
+            <div *ngIf="errorMessage" class="error-message mb-3">
+                {{errorMessage}}
+            </div>
 
+            <div *ngIf="successMessage" class="success-message mb-3">
+                {{successMessage}}
+            </div>
+
+            <button type="submit" class="btn sign-up-button w-100 mb-3">
+                Cadastrar
+            </button>
         </form>
         
         <div class="text-center sign-up-prompt">

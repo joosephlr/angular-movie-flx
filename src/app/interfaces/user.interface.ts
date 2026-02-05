@@ -5,9 +5,10 @@ export interface User {
 
 export interface UserResponse {
   token: string;
-  user: {
-    id: number;
-    email: string;
-    name: string;
-  }
+}
+
+export interface UserRegister {
+  name: string;
+  email: string;
+  password: string;
 }

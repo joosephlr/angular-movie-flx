@@ -101,3 +101,15 @@
     text-decoration: underline;
     color: white;
 }
+
+.success-message{
+    color: green;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+.error-message{
+    color: green;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}

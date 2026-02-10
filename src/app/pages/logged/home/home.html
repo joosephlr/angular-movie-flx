@@ -1,7 +1,18 @@
 <app-header/>
 
 <main class="home-container">
-  <section class="cards-grid">
+  <!-- Estado de carregamento -->
+  <div *ngIf="isLoading" class="loading-container">
+    <p>Carregando filmes...</p>
+  </div>
+
+  <!-- Mensagem de erro -->
+  <div *ngIf="errorMessage" class="error-container">
+    <p class="error-message">{{ errorMessage }}</p>
+  </div>
+
+  <!-- Grade de filmes -->
+  <section class="cards-grid" *ngIf="!isLoading && !errorMessage">
     <ng-container *ngFor="let card of cards">
       <app-card
         [title]="card.title"
@@ -14,4 +25,9 @@
       ></app-card>
     </ng-container>
   </section>
+
+  <!-- Mensagem quando não há filmes -->
+  <div *ngIf="!isLoading && !errorMessage && cards.length === 0" class="empty-container">
+    <p>Nenhum filme encontrado.</p>
+  </div>
 </main>

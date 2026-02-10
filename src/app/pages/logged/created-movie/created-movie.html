@@ -6,7 +6,17 @@
                 <div class="sign-up-card" style="width: 900px; max-width: 1000px;">
                     <h1 class="sign-up-title text-center">Cadastre seu filme aqui</h1>
                     
-                    <form class="sign-up-form">
+                    <!-- Mensagem de sucesso -->
+                    <div *ngIf="successMessage" class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ successMessage }}
+                    </div>
+
+                    <!-- Mensagem de erro -->
+                    <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ errorMessage }}
+                    </div>
+                    
+                    <form class="sign-up-form" [formGroup]="movieForm" (ngSubmit)="onSubmit()">
                         <div class="row mb-3">
                             <div class="col-6">
                                 <input 
@@ -14,8 +24,12 @@
                                     class="form-control sign-up-input"
                                     style="font-size: 20px; height: 60px;"
                                     placeholder="Nome do filme"
-                                    id="nomeFilme"
+                                    formControlName="title"
+                                    [class.is-invalid]="title?.invalid && title?.touched"
                                 >
+                                <small class="text-danger" *ngIf="title?.invalid && title?.touched">
+                                    Nome do filme é obrigatório (mínimo 3 caracteres)
+                                </small>
                             </div>
                             <div class="col-6">
                                 <input 
@@ -23,8 +37,12 @@
                                     class="form-control sign-up-input"
                                     style="font-size: 20px; height: 60px;"
                                     placeholder="Descrição do filme"
-                                    id="descricaoFilme"
+                                    formControlName="description"
+                                    [class.is-invalid]="description?.invalid && description?.touched"
                                 >
+                                <small class="text-danger" *ngIf="description?.invalid && description?.touched">
+                                    Descrição é obrigatória (mínimo 10 caracteres)
+                                </small>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -33,50 +51,78 @@
                                     type="date" 
                                     class="form-control sign-up-input" 
                                     placeholder="Data de lançamento"
-                                    id="dataLancamento"
+                                    formControlName="releaseDate"
+                                    [class.is-invalid]="releaseDate?.invalid && releaseDate?.touched"
                                     style="color: #fff; background-color: #232323; font-size: 20px; height: 60px;"
                                 >
                                 <span style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: #d33;"><i class="bi bi-calendar-event"></i></span>
+                                <small class="text-danger" *ngIf="releaseDate?.invalid && releaseDate?.touched">
+                                    Data de lançamento é obrigatória
+                                </small>
                             </div>
                             <div class="col-6 position-relative">
                                 <input 
                                     type="number" 
                                     class="form-control sign-up-input"
-                                    placeholder="Avaliação geral"
-                                    id="avaliacaoGeral"
-                                    min="0" max="10" step="0.1"
+                                    placeholder="Avaliação geral (0-100)"
+                                    formControlName="approval"
+                                    [class.is-invalid]="approval?.invalid && approval?.touched"
+                                    min="0" max="100" step="0.1"
                                     style="color: #fff; background-color: #232323; font-size: 20px; height: 60px;"
                                 >
                                 <span style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: #d33;"><i class="bi bi-star"></i></span>
+                                <small class="text-danger" *ngIf="approval?.invalid && approval?.touched">
+                                    Avaliação deve estar entre 0 e 100
+                                </small>
                             </div>
                         </div>
                         <div class="row mb-4">
                             <div class="col-6 position-relative">
-                                <select class="form-select sign-up-input" id="ondeDisponivel" style="color: #fff; background-color: #232323; font-size: 20px; height: 60px;">
+                                <select 
+                                    class="form-select sign-up-input" 
+                                    formControlName="provider"
+                                    [class.is-invalid]="provider?.invalid && provider?.touched"
+                                    style="color: #fff; background-color: #232323; font-size: 20px; height: 60px;"
+                                >
                                     <option value="" disabled selected>Aonde está disponível?</option>
-                                    <option>Netflix</option>
-                                    <option>Amazon Prime</option>
-                                    <option>Disney+</option>
-                                    <option>HBO Max</option>
-                                    <option>Outro</option>
+                                    <option value="NETFLIX">Netflix</option>
+                                    <option value="AMAZON_PRIME">Amazon Prime</option>
+                                    <option value="DISNEY_PLUS">Disney+</option>
+                                    <option value="HBO_MAX">HBO Max</option>
+                                    <option value="OUTRO">Outro</option>
                                 </select>
                                 <span style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: #d33;"><i class="bi bi-chevron-down"></i></span>
+                                <small class="text-danger" *ngIf="provider?.invalid && provider?.touched">
+                                    Selecione um provedor
+                                </small>
                             </div>
                             <div class="col-6 position-relative">
-                                <select class="form-select sign-up-input" id="categoria" style="color: #fff; background-color: #232323; font-size: 20px; height: 60px;">
+                                <select 
+                                    class="form-select sign-up-input" 
+                                    formControlName="category"
+                                    [class.is-invalid]="category?.invalid && category?.touched"
+                                    style="color: #fff; background-color: #232323; font-size: 20px; height: 60px;"
+                                >
                                     <option value="" disabled selected>Qual categoria</option>
-                                    <option>Ação</option>
-                                    <option>Drama</option>
-                                    <option>Comédia</option>
-                                    <option>Sci-Fi</option>
-                                    <option>Romance</option>
-                                    <option>Outro</option>
+                                    <option value="ACAO">Ação</option>
+                                    <option value="DRAMA">Drama</option>
+                                    <option value="COMEDIA">Comédia</option>
+                                    <option value="SCI_FI">Sci-Fi</option>
+                                    <option value="ROMANCE">Romance</option>
+                                    <option value="OUTRO">Outro</option>
                                 </select>
                                 <span style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: #d33;"><i class="bi bi-chevron-down"></i></span>
+                                <small class="text-danger" *ngIf="category?.invalid && category?.touched">
+                                    Selecione uma categoria
+                                </small>
                             </div>
                         </div>
-                        <button type="submit" class="btn sign-up-button w-100 mb-3 creat-movie-button">
-                            Cadastrar filme
+                        <button 
+                            type="submit" 
+                            class="btn sign-up-button w-100 mb-3 creat-movie-button"
+                            [disabled]="movieForm.invalid || isSubmitting"
+                        >
+                            {{ isSubmitting ? 'Cadastrando...' : 'Cadastrar filme' }}
                         </button>
                         <div style="display: flex; justify-content: center;">
                             <a routerLink="" routerLinkActive="active" class="btn btn-default back-button">Voltar</a>

@@ -18,6 +18,7 @@ export class Home implements OnInit {
   cards: MovieCard[] = [];
   isLoading: boolean = true;
   errorMessage: string = '';
+  providersMap: { [key: number]: string } = {};
 
   constructor(
     private movieService: MovieService,
@@ -26,7 +27,26 @@ export class Home implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.loadMovies();
+    this.loadProviders();
+  }
+
+  loadProviders(): void {
+    this.movieService.getProviders().subscribe({
+      next: (providers: any[]) => {
+        console.log('Provedores carregados:', providers);
+        // Criar mapa de ID -> nome do provedor
+        providers.forEach(provider => {
+          this.providersMap[provider.id] = provider.name;
+        });
+        console.log('Mapa de provedores:', this.providersMap);
+        this.loadMovies();
+      },
+      error: (error) => {
+        console.error('Erro ao carregar provedores:', error);
+        // Continuar carregando filmes mesmo se os provedores falharem
+        this.loadMovies();
+      }
+    });
   }
 
   loadMovies(): void {
@@ -55,14 +75,23 @@ export class Home implements OnInit {
           // Gerar valores aleatórios para duration e ageRating
           const defaults = this.movieGeneratorService.generateMovieDefaults();
 
+          // Obter o nome do provedor usando o mapa
+          let providerName = 'N/A';
+          if (movie.services && Array.isArray(movie.services) && movie.services.length > 0) {
+            const serviceId = movie.services[0];
+            // Se for um objeto com id, usar serviceId.id; se for um número direto, usar serviceId
+            const id = typeof serviceId === 'object' ? serviceId.id : serviceId;
+            providerName = this.providersMap[id] || 'N/A';
+          }
+
           return {
             id: movie.id || 0,
             title: movie.title || '',
             description: movie.description || '',
             duration: defaults.duration, // Valor aleatório gerado
             ageRating: defaults.ageRating, // Valor aleatório gerado
-            approval: movie.approval || movie.rating || 0,
-            provider: movie.provider || movie.services?.[0]?.name || 'N/A',
+            approval: movie.rating * 10 || 0,
+            provider: providerName,
             isTop10: movie.isTop10 || false,
             topLabel: movie.topLabel || 'TOP 10'
           };

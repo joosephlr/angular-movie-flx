@@ -79,4 +79,34 @@ export class MovieService {
 
     return this.http.delete(`${this.apiUrl}/flix/movie/${id}`, { headers });
   }
+
+  /**
+   * Lista todas as categorias disponíveis
+   * @returns Observable com lista de categorias
+   */
+  getCategories(): Observable<any[]> {
+    const token = this.authService.getToken();
+    
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+
+    return this.http.get<any[]>(`${this.apiUrl}/flix/category`, { headers });
+  }
+
+  /**
+   * Lista todos os provedores de serviço disponíveis
+   * @returns Observable com lista de serviços/provedores
+   */
+  getProviders(): Observable<any[]> {
+    const token = this.authService.getToken();
+    
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+
+    return this.http.get<any[]>(`${this.apiUrl}/flix/stream-service`, { headers });
+  }
 }

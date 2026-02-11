@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Header } from "../../../components/not-logged/header/header";
 import { RouterLink, RouterLinkActive, Router } from "@angular/router";
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MovieService } from '../../../services/movie.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-created-movie',
@@ -16,33 +17,46 @@ export class CreatedMovie implements OnInit {
   isSubmitting: boolean = false;
   successMessage: string = '';
   errorMessage: string = '';
+  isLoading: boolean = true;
 
-  // Mapeamento de categorias e serviços para seus IDs
-  categoriesMap: { [key: string]: number } = {
-    'ACAO': 1,
-    'DRAMA': 2,
-    'COMEDIA': 3,
-    'SCI_FI': 4,
-    'ROMANCE': 5,
-    'OUTRO': 6
-  };
-
-  servicesMap: { [key: string]: number } = {
-    'NETFLIX': 1,
-    'AMAZON_PRIME': 2,
-    'DISNEY_PLUS': 3,
-    'HBO_MAX': 4,
-    'OUTRO': 5
-  };
+  // Arrays para armazenar categorias e provedores do API
+  categories: any[] = [];
+  providers: any[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
     private movieService: MovieService,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
     this.initializeForm();
+    this.loadCategoriesAndProviders();
+  }
+
+  loadCategoriesAndProviders(): void {
+    this.isLoading = true;
+    
+    forkJoin({
+      categories: this.movieService.getCategories(),
+      providers: this.movieService.getProviders()
+    }).subscribe({
+      next: (result) => {
+        this.categories = result.categories;
+        this.providers = result.providers;
+        console.log('Categorias carregadas:', this.categories);
+        console.log('Provedores carregados:', this.providers);
+        this.isLoading = false;
+        this.cdr.detectChanges();
+      },
+      error: (error) => {
+        console.error('Erro ao carregar categorias e provedores:', error);
+        this.errorMessage = 'Erro ao carregar categorias e provedores.';
+        this.isLoading = false;
+        this.cdr.detectChanges();
+      }
+    });
   }
 
   initializeForm(): void {
@@ -71,12 +85,16 @@ export class CreatedMovie implements OnInit {
     const [year, month, day] = releaseDate.split('-');
     const formattedDate = `${day}/${month}/${year}`;
 
-    // Obter os IDs das categorias e serviços
-    const categoryValue = this.movieForm.get('category')?.value;
-    const providerValue = this.movieForm.get('provider')?.value;
-    
-    const categoryId = this.categoriesMap[categoryValue];
-    const serviceId = this.servicesMap[providerValue];
+    // Obter os IDs das categorias e serviços (já são números do select)
+    const categoryId = parseInt(this.movieForm.get('category')?.value, 10);
+    const serviceId = parseInt(this.movieForm.get('provider')?.value, 10);
+
+    // Validar se os IDs são válidos
+    if (!categoryId || !serviceId) {
+      this.errorMessage = 'Erro: categoria ou provedor inválido.';
+      this.isSubmitting = false;
+      return;
+    }
 
     // Preparar os dados do filme conforme esperado pelo backend
     const movieData = {
